@@ -32,14 +32,14 @@ button {
     height: 100px;
     width: 218px;
     margin: 2px;
-    align-items: flex-end;
+    align-items: center;
     justify-content: right;
 }
 
 .result{
     font-size: 50px;
     text-align: right;
-    padding: 5px;
+    padding: 10px;
     
     
     
