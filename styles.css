@@ -11,6 +11,7 @@ button {
     height: 50px;
     padding: 0px;
     line-height: 0px;
+    border-style: groove;
 
 }
 
@@ -24,7 +25,25 @@ button {
 
 }
 
+.display{
+    display: flex;
+    border: 5px lightgray;
+    border-style:groove;
+    height: 100px;
+    width: 218px;
+    margin: 2px;
+    align-items: flex-end;
+    justify-content: right;
+}
 
+.result{
+    font-size: 50px;
+    text-align: right;
+    padding: 5px;
+    
+    
+    
+}
 
 .number-button, .clear-button, .equals-button, .add-button, .subtract-button, .multiply-button, .divide-button {
     padding: 20px;
