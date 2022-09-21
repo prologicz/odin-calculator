@@ -3,6 +3,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-family:'Inconsolata';
 
 }
 
@@ -28,13 +29,14 @@ button {
 .display{
     display: flex;
     border: 5px lightgray;
-    border-style: ridge;
+    border-style:groove;
     height: 100px;
-    width: 204px;
+    width: 220px;
     margin-bottom: 2px;
     align-items: center;
     justify-content: right;
     padding: 5px;
+    background-color: floralwhite;
 }
 
 .result, .number-display, .result-display{
@@ -46,7 +48,35 @@ button {
     
 }
 
-.number-button, .clear-button, .equals-button, .add-button, .subtract-button, .multiply-button, .divide-button {
+.number-button, .clear-button, .equals-button, .calculation-button {
     padding: 20px;
     margin: 2px;
+    border: 2px lightgray;
+    border-style:groove;
+    font-family: 'Inconsolata';
+    font-weight: 700;
+}
+
+.number-button {
+
+    background-color: darkgray;
+}
+
+.calculation-button {
+
+    background-color: orange;
+
+}
+
+.clear-button {
+
+    background-color: rgb(118, 118, 187);
+
+}
+
+.equals-button {
+
+    background-color: rgb(128, 202, 128);
+
+
 }
