@@ -24,6 +24,22 @@ function operate (num1, operator, num2) {
 }
 
 
+
+const buttonArea = document.querySelector('.calculator-buttons')
+const displayArea = document.querySelector('.display')
+const numberButtons = buttonArea.querySelectorAll('.number-button')
+const calculationButtons = buttonArea.querySelectorAll('.calculation-button')
+const equalsButton = buttonArea.querySelector('.equals-button')
+const clearButton = buttonArea.querySelector('.clear-button')
+
+function clearDisplay() {
+
+    displayValues = document.querySelectorAll('.number-display')
+    displayValues.forEach(value => displayArea.removeChild(value))
+
+
+}
+
 function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
@@ -57,8 +73,7 @@ function equals (e) {
     equalsButton.addEventListener('click', (e) => {
         nextNum = parseInt(displayArray.join(''))
 
-        displayValues = document.querySelectorAll('.number-display')
-        displayValues.forEach(value => displayArea.removeChild(value))
+        clearDisplay();
         
         solution = operate(firstNum, operator, nextNum)
         buttonPress = document.createElement('div')
@@ -76,8 +91,7 @@ function equals (e) {
 
 function clear (e) {
     clearButton.addEventListener('click', (e) => {
-        displayValues = document.querySelectorAll('.number-display')
-        displayValues.forEach(value => displayArea.removeChild(value))
+        clearDisplay()
         firstNum = null
         nextNum = null
         operator = null
@@ -88,12 +102,7 @@ function clear (e) {
 }
 
 
-buttonArea = document.querySelector('.calculator-buttons')
-displayArea = document.querySelector('.display')
-numberButtons = buttonArea.querySelectorAll('.number-button')
-calculationButtons = buttonArea.querySelectorAll('.calculation-button')
-equalsButton = buttonArea.querySelector('.equals-button')
-clearButton = buttonArea.querySelector('.clear-button')
+
 
 let displayArray = []
 let firstNum
@@ -109,8 +118,7 @@ clear();
 calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
     firstNum = parseInt(displayArray.join(''))
     operator = e.srcElement.textContent
-    displayValues = document.querySelectorAll('.number-display')
-    displayValues.forEach(value => displayArea.removeChild(value))
+    clearDisplay();
     displayArray = []
 
 
