@@ -23,28 +23,31 @@ function operate (num1, operator, num2) {
     if (operator == '/') return divide(num1, num2)
 }
 
-buttonArea = document.querySelector('.calculator-buttons')
-displayArea = document.querySelector('.display')
-numberButtons = buttonArea.querySelectorAll('.number-button')
-calculationButtons = buttonArea.querySelectorAll('.calculation-button')
-equalsButton = buttonArea.querySelector('.equals-button')
-clearButton = buttonArea.querySelector('.clear-button')
 
-
-let displayArray = []
-let num1
-let solution
-
-function getNumber (e) {
+function getFirstNumber (e) {
+    
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-
+        console.log(`First Number + ${firstNum} + ${e}`)
         buttonPress = document.createElement('div')
         buttonPress.classList.add('number-display')
         buttonPress.textContent = e.srcElement.innerText;    
         displayArea.appendChild(buttonPress)
         displayArray.push(buttonPress.textContent)
-        num1 = parseInt(displayArray.join(''))
+        
+    }))
+}
+
+function getNextNumber (e) {
+    numberButtons.forEach(button => button.addEventListener('click', (e) =>{
+
+        console.log(`Next Number + ${firstNum} + ${e}`)
+        buttonPress = document.createElement('div')
+        buttonPress.classList.add('number-display')
+        buttonPress.textContent = e.srcElement.innerText;    
+        displayArea.appendChild(buttonPress)
+        displayArray.push(buttonPress.textContent)
+
         
     }))
 }
@@ -52,34 +55,65 @@ function getNumber (e) {
 function equals (e) {
 
     equalsButton.addEventListener('click', (e) => {
+        nextNum = parseInt(displayArray.join(''))
 
         displayValues = document.querySelectorAll('.number-display')
         displayValues.forEach(value => displayArea.removeChild(value))
         
-        solution = operate(num1, '+', num1)
+        solution = operate(firstNum, operator, nextNum)
         buttonPress = document.createElement('div')
         buttonPress.classList.add('number-display')
         buttonPress.textContent = solution
         displayArea.appendChild(buttonPress)
+
+        console.log(firstNum)
+        console.log(operator)
+        console.log(nextNum)
+        console.log(solution)
     
     })
 }
-
 
 function clear (e) {
     clearButton.addEventListener('click', (e) => {
         displayValues = document.querySelectorAll('.number-display')
         displayValues.forEach(value => displayArea.removeChild(value))
-        num1 = null
+        firstNum = null
+        nextNum = null
+        operator = null
         solution = null
         displayArray = []
 
     })
 }
 
-getNumber();
+
+buttonArea = document.querySelector('.calculator-buttons')
+displayArea = document.querySelector('.display')
+numberButtons = buttonArea.querySelectorAll('.number-button')
+calculationButtons = buttonArea.querySelectorAll('.calculation-button')
+equalsButton = buttonArea.querySelector('.equals-button')
+clearButton = buttonArea.querySelector('.clear-button')
+
+let displayArray = []
+let firstNum
+let nextNum
+let operator
+let solution
+
+if(!firstNum) getFirstNumber()
+if(firstNum) getNextNumber();
 equals();
 clear();
 
+calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
+    firstNum = parseInt(displayArray.join(''))
+    operator = e.srcElement.textContent
+    displayValues = document.querySelectorAll('.number-display')
+    displayValues.forEach(value => displayArea.removeChild(value))
+    displayArray = []
+
+
+}))
 
 
