@@ -28,18 +28,19 @@ button {
 .display{
     display: flex;
     border: 5px lightgray;
-    border-style:groove;
+    border-style: ridge;
     height: 100px;
-    width: 218px;
-    margin: 2px;
+    width: 204px;
+    margin-bottom: 2px;
     align-items: center;
     justify-content: right;
+    padding: 5px;
 }
 
-.result{
+.result, #number-display{
     font-size: 50px;
     text-align: right;
-    padding: 10px;
+    
     
     
     
