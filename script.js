@@ -46,7 +46,7 @@ function clearDisplay() {
 function writeDisplay(e) {
     buttonPress = document.createElement('div')
     buttonPress.classList.add('number-display')
-    buttonPress.textContent = e.srcElement.innerText;    
+    buttonPress.textContent = e;    
     displayArea.appendChild(buttonPress)
 }
 
@@ -54,7 +54,8 @@ function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-        writeDisplay(e)
+        if (solution) clearDisplay
+        writeDisplay(e.srcElement.innerText)
         displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
         
     }))
@@ -62,7 +63,7 @@ function getFirstNumber (e) {
 
 function calculate (e) {
     calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
-        firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
+        if(!solution) firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
         operator = e.srcElement.textContent
         clearDisplay();
         displayArray = []
@@ -73,6 +74,7 @@ function calculate (e) {
 
 function getNextNumber (e) {
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
+
 
         writeDisplay(e)
         displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in equals function
@@ -89,15 +91,8 @@ function equals (e) {
         clearDisplay();
         
         solution = operate(firstNum, operator, nextNum)
-        buttonPress = document.createElement('div')
-        buttonPress.classList.add('number-display')
-        buttonPress.textContent = solution
-        displayArea.appendChild(buttonPress)
-
-        console.log(firstNum)
-        console.log(operator)
-        console.log(nextNum)
-        console.log(solution)
+        writeDisplay(solution)
+        firstNum = solution
     
     })
 }
@@ -120,7 +115,7 @@ function clear (e) {
 //TODO Exception Handling
 //Reset when pressing a number after solution is displayed
 //firstNum then equals should keep same value instead of appending
-//Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum
+//Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum - DONE
 //Error message when dividing by zero
 //Round decimals to prevent overflow of UI
 
