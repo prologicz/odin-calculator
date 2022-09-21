@@ -1,5 +1,6 @@
-console.log('Hello World')
+console.log('The Odin Project Calculator')
 
+//Math functions
 function add (num1, num2) {
     return num1 + num2
 }
@@ -25,6 +26,7 @@ function operate (num1, operator, num2) {
 
 
 
+//Document Query Selectors
 const buttonArea = document.querySelector('.calculator-buttons')
 const displayArea = document.querySelector('.display')
 const numberButtons = buttonArea.querySelectorAll('.number-button')
@@ -32,37 +34,48 @@ const calculationButtons = buttonArea.querySelectorAll('.calculation-button')
 const equalsButton = buttonArea.querySelector('.equals-button')
 const clearButton = buttonArea.querySelector('.clear-button')
 
+
+//Calculator Functions
 function clearDisplay() {
 
     displayValues = document.querySelectorAll('.number-display')
     displayValues.forEach(value => displayArea.removeChild(value))
 
+}
 
+function writeDisplay(e) {
+    buttonPress = document.createElement('div')
+    buttonPress.classList.add('number-display')
+    buttonPress.textContent = e.srcElement.innerText;    
+    displayArea.appendChild(buttonPress)
 }
 
 function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-        console.log(`First Number + ${firstNum} + ${e}`)
-        buttonPress = document.createElement('div')
-        buttonPress.classList.add('number-display')
-        buttonPress.textContent = e.srcElement.innerText;    
-        displayArea.appendChild(buttonPress)
-        displayArray.push(buttonPress.textContent)
+        writeDisplay(e)
+        displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
         
+    }))
+}
+
+function calculate (e) {
+    calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
+        firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
+        operator = e.srcElement.textContent
+        clearDisplay();
+        displayArray = []
+    
+    
     }))
 }
 
 function getNextNumber (e) {
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-        console.log(`Next Number + ${firstNum} + ${e}`)
-        buttonPress = document.createElement('div')
-        buttonPress.classList.add('number-display')
-        buttonPress.textContent = e.srcElement.innerText;    
-        displayArea.appendChild(buttonPress)
-        displayArray.push(buttonPress.textContent)
+        writeDisplay(e)
+        displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in equals function
 
         
     }))
@@ -71,7 +84,7 @@ function getNextNumber (e) {
 function equals (e) {
 
     equalsButton.addEventListener('click', (e) => {
-        nextNum = parseInt(displayArray.join(''))
+        nextNum = parseInt(displayArray.join('')) // Converting nextNum initially stored as Array into integer
 
         clearDisplay();
         
@@ -104,6 +117,14 @@ function clear (e) {
 
 
 
+//TODO Exception Handling
+//Reset when pressing a number after solution is displayed
+//firstNum then equals should keep same value instead of appending
+//Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum
+//Error message when dividing by zero
+//Round decimals to prevent overflow of UI
+
+
 let displayArray = []
 let firstNum
 let nextNum
@@ -112,16 +133,10 @@ let solution
 
 if(!firstNum) getFirstNumber()
 if(firstNum) getNextNumber();
+calculate();
 equals();
 clear();
 
-calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
-    firstNum = parseInt(displayArray.join(''))
-    operator = e.srcElement.textContent
-    clearDisplay();
-    displayArray = []
 
-
-}))
 
 
