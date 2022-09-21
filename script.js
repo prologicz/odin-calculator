@@ -32,16 +32,54 @@ clearButton = buttonArea.querySelector('.clear-button')
 
 
 let displayArray = []
-let inputValue
-numberButtons.forEach(button => button.addEventListener('click', (e) =>{
+let num1
+let solution
 
-    pressedButton = e.srcElement.innerText
-    numberButtonPress = document.createElement('div')
-    numberButtonPress.id = 'number-display'
-    numberButtonPress.textContent = e.srcElement.innerText;    
-    displayArea.appendChild(numberButtonPress)
-    displayArray.push(pressedButton)
-    inputValue = parseInt(displayArray.join(''))
-    console.log(inputValue)
-}))
+function getNumber (e) {
+    numberButtons.forEach(button => button.addEventListener('click', (e) =>{
+
+
+        buttonPress = document.createElement('div')
+        buttonPress.classList.add('number-display')
+        buttonPress.textContent = e.srcElement.innerText;    
+        displayArea.appendChild(buttonPress)
+        displayArray.push(buttonPress.textContent)
+        num1 = parseInt(displayArray.join(''))
+        
+    }))
+}
+
+function equals (e) {
+
+    equalsButton.addEventListener('click', (e) => {
+
+        displayValues = document.querySelectorAll('.number-display')
+        displayValues.forEach(value => displayArea.removeChild(value))
+        
+        solution = operate(num1, '+', num1)
+        buttonPress = document.createElement('div')
+        buttonPress.classList.add('number-display')
+        buttonPress.textContent = solution
+        displayArea.appendChild(buttonPress)
+    
+    })
+}
+
+
+function clear (e) {
+    clearButton.addEventListener('click', (e) => {
+        displayValues = document.querySelectorAll('.number-display')
+        displayValues.forEach(value => displayArea.removeChild(value))
+        num1 = null
+        solution = null
+        displayArray = []
+
+    })
+}
+
+getNumber();
+equals();
+clear();
+
+
 
