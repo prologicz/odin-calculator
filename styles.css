@@ -16,7 +16,21 @@ button {
 
 }
 
+.page-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}
 
+.content {
+    flex: 2;
+    text-align: center;
+}
+.calculator {
+    flex: 3;
+}
 
 .calculator-border {
     display: flex;
