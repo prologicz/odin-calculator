@@ -58,6 +58,7 @@ function getFirstNumber (e) {
 
         if(!operator) {
             solution = null
+            if (displayArray.length === 0) clearDisplay();
             writeDisplay(e.srcElement.innerText)
             displayArray.push(e.srcElement.innerText)
 
