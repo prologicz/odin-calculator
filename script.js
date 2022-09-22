@@ -104,7 +104,7 @@ function equals (e) {
             solution = operate(firstNum, operator, nextNum)
         }
         clearDisplay();
-        writeDisplay(solution)
+        setTimeout(() => writeDisplay(solution), 100)
         firstNum = solution
         nextNum = null
         operator = null
@@ -130,7 +130,7 @@ function clear (e) {
 
 //TODO Exception Handling
 //Reset when pressing a number after solution is displayed - DONE
-//firstNum then equals should keep same value instead of appending
+//firstNum then equals should keep same value instead of appending - DONE
 //Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum - DONE
 //Error message when dividing by zero
 //Round decimals to prevent overflow of UI
