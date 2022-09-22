@@ -54,18 +54,17 @@ function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
+        if (displayArray.length === 0) clearDisplay();
+        solution = null
 
 
         if(!operator) {
-            solution = null
-            if (displayArray.length === 0) clearDisplay();
             writeDisplay(e.srcElement.innerText)
             displayArray.push(e.srcElement.innerText)
 
         }
 
         if(operator) {
-            console.log(displayArray.length)
             if (displayArray.length === 0) clearDisplay();
             solution = null
             writeDisplay(e.srcElement.innerText)
@@ -86,31 +85,25 @@ function calculate (e) {
     }))
 }
 
-function getNextNumber (e) {
-    numberButtons.forEach(button => button.addEventListener('click', (e) =>{
-
-        if(!operator) {
-            clearDisplay();
-            firstNum = null;
-            getFirstNumber();
-        }
-        if(operator) {
-            writeDisplay(e)
-            displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in equals function
-        }
-
-        
-    }))
-}
-
 function equals (e) {
 
     equalsButton.addEventListener('click', (e) => {
-        nextNum = parseInt(displayArray.join('')) // Converting nextNum initially stored as Array into integer
 
-        clearDisplay();
+        if(displayArray.length === 0) {
+
+            solution = firstNum
+        }
         
-        solution = operate(firstNum, operator, nextNum)
+        if(!operator && displayArray.length > 0) {
+            firstNum = parseInt(displayArray.join(''))
+            solution = firstNum
+        }
+
+        if (operator && displayArray.length > 0) {
+            nextNum = parseInt(displayArray.join('')) // Converting nextNum initially stored as Array into integer
+            solution = operate(firstNum, operator, nextNum)
+        }
+        clearDisplay();
         writeDisplay(solution)
         firstNum = solution
         nextNum = null
@@ -141,6 +134,7 @@ function clear (e) {
 //Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum - DONE
 //Error message when dividing by zero
 //Round decimals to prevent overflow of UI
+//Keep first number on screen until second number input begins - DONE
 
 
 let displayArray = []
