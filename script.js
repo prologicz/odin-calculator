@@ -54,7 +54,7 @@ function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-        if (solution) clearDisplay();
+
 
         if(!operator) {
             solution = null
@@ -64,6 +64,8 @@ function getFirstNumber (e) {
         }
 
         if(operator) {
+            console.log(displayArray.length)
+            if (displayArray.length === 0) clearDisplay();
             solution = null
             writeDisplay(e.srcElement.innerText)
             displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
@@ -76,7 +78,7 @@ function calculate (e) {
     calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
         if(!solution) firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
         operator = e.srcElement.textContent
-        clearDisplay();
+
         displayArray = []
     
     
