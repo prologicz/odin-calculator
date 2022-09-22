@@ -54,9 +54,20 @@ function getFirstNumber (e) {
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-        if (solution) clearDisplay
-        writeDisplay(e.srcElement.innerText)
-        displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
+        if (solution) clearDisplay();
+
+        if(!operator) {
+            solution = null
+            writeDisplay(e.srcElement.innerText)
+            displayArray.push(e.srcElement.innerText)
+
+        }
+
+        if(operator) {
+            solution = null
+            writeDisplay(e.srcElement.innerText)
+            displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
+        }
         
     }))
 }
@@ -75,9 +86,15 @@ function calculate (e) {
 function getNextNumber (e) {
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
 
-
-        writeDisplay(e)
-        displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in equals function
+        if(!operator) {
+            clearDisplay();
+            firstNum = null;
+            getFirstNumber();
+        }
+        if(operator) {
+            writeDisplay(e)
+            displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in equals function
+        }
 
         
     }))
@@ -93,6 +110,9 @@ function equals (e) {
         solution = operate(firstNum, operator, nextNum)
         writeDisplay(solution)
         firstNum = solution
+        nextNum = null
+        operator = null
+        displayArray = []
     
     })
 }
@@ -113,7 +133,7 @@ function clear (e) {
 
 
 //TODO Exception Handling
-//Reset when pressing a number after solution is displayed
+//Reset when pressing a number after solution is displayed - DONE
 //firstNum then equals should keep same value instead of appending
 //Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum - DONE
 //Error message when dividing by zero
@@ -126,8 +146,7 @@ let nextNum
 let operator
 let solution
 
-if(!firstNum) getFirstNumber()
-if(firstNum) getNextNumber();
+getFirstNumber()
 calculate();
 equals();
 clear();
