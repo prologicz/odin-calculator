@@ -8,11 +8,12 @@ body{
 }
 
 button {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     padding: 0px;
     line-height: 0px;
     border-style: groove;
+    font-size: 30px;
 
 }
 
@@ -27,9 +28,11 @@ button {
 .content {
     flex: 2;
     text-align: center;
+    font-size: 20px;
 }
 .calculator {
     flex: 3;
+    padding-right: 20px;
 }
 
 .calculator-border {
@@ -44,8 +47,8 @@ button {
     display: flex;
     border: 5px lightgray;
     border-style:groove;
-    height: 100px;
-    width: 220px;
+    height: 200px;
+    width: 440px;
     margin-bottom: 2px;
     align-items: center;
     justify-content: right;
@@ -54,7 +57,7 @@ button {
 }
 
 .result, .number-display, .result-display{
-    font-size: 50px;
+    font-size: 75px;
     text-align: right;
     
     
@@ -64,7 +67,8 @@ button {
 
 .number-button, .clear-button, .equals-button, .calculation-button {
     padding: 20px;
-    margin: 2px;
+    margin-top: 2px;
+    margin-bottom: 3px;
     border: 2px lightgray;
     border-style:groove;
     font-family: 'Inconsolata';
