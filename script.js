@@ -76,10 +76,30 @@ function getFirstNumber (e) {
 
 function calculate (e) {
     calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
-        if(!solution) firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
-        operator = e.srcElement.textContent
+        if(!solution && !operator) {
+            firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
+            displayArray = []
+        }
 
-        displayArray = []
+        if(!operator) {
+            operator = e.srcElement.textContent
+            displayArray = []
+        }
+            
+        if(operator && displayArray.length > 0) {
+
+            nextNum = parseInt(displayArray.join(''))
+            solution = operate(firstNum, operator, nextNum)
+            clearDisplay();
+            setTimeout(() => writeDisplay(solution), 100)
+            firstNum = solution
+            operator = e.srcElement.textContent
+            nextNum = null
+            displayArray = []
+
+        }
+
+
     
     
     }))
