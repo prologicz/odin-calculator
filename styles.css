@@ -65,6 +65,14 @@ button {
     
 }
 
+.error-display {
+    font-size: 28px;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+
 .number-button, .clear-button, .equals-button, .calculation-button {
     padding: 20px;
     margin-top: 2px;

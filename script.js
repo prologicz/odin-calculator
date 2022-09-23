@@ -50,9 +50,27 @@ function writeDisplay(e) {
     displayArea.appendChild(buttonPress)
 }
 
+function clearError() {
+
+    displayValues = document.querySelectorAll('.error-display')
+    displayValues.forEach(value => displayArea.removeChild(value))
+    errorFlag = 0
+}
+
+function writeError(message) {
+    buttonPress = document.createElement('div')
+    buttonPress.classList.add('error-display')
+    buttonPress.textContent = message
+    displayArea.appendChild(buttonPress)
+    errorFlag = 1
+}
+
 function getFirstNumber (e) {
+
     
     numberButtons.forEach(button => button.addEventListener('click', (e) =>{
+
+        clearError()
 
         if (displayArray.length === 0) clearDisplay();
         solution = null
@@ -76,17 +94,28 @@ function getFirstNumber (e) {
 
 function calculate (e) {
     calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
-        if(!solution && !operator) {
+
+
+        if(!solution && !operator && errorFlag === 0) {
             firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
             displayArray = []
+            if (!firstNum) {
+                clearDisplay()
+                firstNum = null
+                nextNum = null
+                operator = null
+                solution = null
+                displayArray = []
+                writeError("Error:\nFirst number not entered")
+            }
         }
 
-        if(!operator) {
+        if(!operator && errorFlag === 0) {
             operator = e.srcElement.textContent
             displayArray = []
         }
             
-        if(operator && displayArray.length > 0) {
+        if(operator && displayArray.length > 0 && errorFlag === 0) {
 
             nextNum = parseInt(displayArray.join(''))
             solution = operate(firstNum, operator, nextNum)
@@ -109,17 +138,29 @@ function equals (e) {
 
     equalsButton.addEventListener('click', (e) => {
 
-        if(displayArray.length === 0) {
+
+        if(displayArray.length === 0 && !firstNum && operator && errorFlag === 0) {
+
+            solution = 0
+        }
+
+
+        if(displayArray.length === 0 && firstNum && !operator && errorFlag === 0) {
 
             solution = firstNum
         }
+
+        if(displayArray.length === 0 && firstNum && operator && errorFlag === 0) {
+
+            writeError("Error:\nSecond number not entered")
+        }
         
-        if(!operator && displayArray.length > 0) {
+        if(!operator && displayArray.length > 0 && errorFlag === 0) {
             firstNum = parseInt(displayArray.join(''))
             solution = firstNum
         }
 
-        if (operator && displayArray.length > 0) {
+        if (operator && displayArray.length > 0 && errorFlag === 0) {
             nextNum = parseInt(displayArray.join('')) // Converting nextNum initially stored as Array into integer
             solution = operate(firstNum, operator, nextNum)
         }
@@ -134,7 +175,9 @@ function equals (e) {
 }
 
 function clear (e) {
+
     clearButton.addEventListener('click', (e) => {
+        clearError()
         clearDisplay()
         firstNum = null
         nextNum = null
@@ -162,6 +205,7 @@ let firstNum
 let nextNum
 let operator
 let solution
+let errorFlag = 0
 
 getFirstNumber()
 calculate();
