@@ -142,9 +142,18 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
                     writeError ('Malformed Expression')
                 }
             else{
+                
                 solution = operate(num1, operator, num2)
+                let solutionString = solution.toString()
+                let solutionStringSplit =  solutionString.split('.')
+                let digitsBefore = solutionStringSplit[0].length
+                //let digitsAfter = solutionStringSplit[1].length
+                let decimalPlaces = 10 ** (10 - digitsBefore)
+                let solutionRounded = Math.round(solution * decimalPlaces) / decimalPlaces
+                console.log(digitsBefore)
+                
                 writeHistory(displayArr, historyArr)
-                writeDisplay(`${solution}`, [])
+                writeDisplay(`${solutionRounded}`, [])
             }
         }
     }
