@@ -63,9 +63,12 @@ let operator
 let num2
 let solution
 
-calculatorButtons = document.querySelectorAll('button')
+let calculatorButtons = document.querySelectorAll('button')
 calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
 
+    e.srcElement.classList.add('button-click')
+    setTimeout(() => {e.srcElement.classList.remove('button-click'); }, 50)
+  
 
     if(e.srcElement.classList.contains('number-button')) {
         
@@ -119,7 +122,7 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
 
 
     if (e.srcElement.classList.contains('equals-button')) {
-        console.log(operator)
+
         if(operator) {
             operatorIndex = displayArr.findIndex((element) => element === ' + ' || element === ' - ' || element === ' x ' || element === ' / ')
             if(!num1) {
@@ -147,4 +150,6 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
     }
 
 }))
+
+
 
