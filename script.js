@@ -43,6 +43,12 @@ function writeHistory (displayArr, historyArr) {
     historyArea.textContent = historyArr.join('')
 }
 
+function writeError (msg) {
+    historyArea = document.querySelector('.history')
+    historyArea.textContent = msg
+
+}
+
 function clearHistory(historyArr) {
     historyArr = []
     historyArea = document.querySelector('.history')
@@ -82,7 +88,7 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
             clearHistory()
         }
 
-        writeDisplay(e.srcElement.textContent, displayArr)
+        if(displayArr.length < 11) writeDisplay(e.srcElement.textContent, displayArr)
     }
 
     if (e.srcElement.classList.contains('calculation-button')) {
@@ -110,7 +116,7 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
             }
 
             operator = e.srcElement.textContent
-            writeDisplay (` ${e.srcElement.textContent} `, displayArr)
+            if(displayArr.length < 11) writeDisplay (` ${e.srcElement.textContent} `, displayArr)
 
         }
 
@@ -125,15 +131,24 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
 
         if(operator) {
             operatorIndex = displayArr.findIndex((element) => element === ' + ' || element === ' - ' || element === ' x ' || element === ' / ')
+            num2 = captureNumber(displayArr.filter((element, index) => index > operatorIndex))
+
             if(!num1) {
                 num1 = captureNumber(displayArr.filter((element, index) => index < operatorIndex))
             }
-            num2 = captureNumber(displayArr.filter((element, index) => index > operatorIndex))
-            solution = operate(num1, operator, num2)
-            writeHistory(displayArr, historyArr)
-            writeDisplay(`${solution}`, [])
+            
+
+            if(isNaN(num1) || isNaN(num2)) {
+                    writeError ('Malformed Expression')
+                }
+            else{
+                solution = operate(num1, operator, num2)
+                writeHistory(displayArr, historyArr)
+                writeDisplay(`${solution}`, [])
+            }
         }
     }
+    
     
     if (e.srcElement.classList.contains('clear-button')) {
 
