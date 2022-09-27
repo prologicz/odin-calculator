@@ -86,6 +86,17 @@ calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
 
         if (displayArr.length > 0) {
 
+            if (operator) {
+                operatorIndex = displayArr.findIndex((element) => element === ' + ' || element === ' - ' || element === ' x ' || element === ' / ')
+                if(!num1) {
+                    num1 = captureNumber(displayArr.filter((element, index) => index < operatorIndex))
+                }
+                num2 = captureNumber(displayArr.filter((element, index) => index > operatorIndex))
+                solution = operate(num1, operator, num2)
+                writeHistory(displayArr, historyArr)
+                writeDisplay(`${solution}`, [])
+            }
+
             if(solution) {
                 num1 = solution
                 num2 = null
