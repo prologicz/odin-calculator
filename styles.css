@@ -45,18 +45,30 @@ button {
 
 .display{
     display: flex;
+    flex-direction: column;
     border: 5px lightgray;
     border-style:groove;
     height: 200px;
     width: 440px;
     margin-bottom: 2px;
-    align-items: center;
+    align-items: right;
     justify-content: right;
     padding: 5px;
     background-color: floralwhite;
+
+
 }
 
-.result, .number-display, .result-display{
+.history {
+    font-size: 30px;
+    flex: 1 0 0;
+    padding-top: 10px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.result {
+    flex: 2 0 0;
     font-size: 75px;
     text-align: right;
     

@@ -25,193 +25,115 @@ function operate (num1, operator, num2) {
 }
 
 
-
-//Document Query Selectors
-const buttonArea = document.querySelector('.calculator-buttons')
-const displayArea = document.querySelector('.display')
-const numberButtons = buttonArea.querySelectorAll('.number-button')
-const calculationButtons = buttonArea.querySelectorAll('.calculation-button')
-const equalsButton = buttonArea.querySelector('.equals-button')
-const clearButton = buttonArea.querySelector('.clear-button')
-
-
-//Calculator Functions
-function clearDisplay() {
-
-    displayValues = document.querySelectorAll('.number-display')
-    displayValues.forEach(value => displayArea.removeChild(value))
-
+function writeDisplay (value, displayArr) {
+    displayArr.push(value)
+    displayArea = document.querySelector('.result')
+    displayArea.textContent = displayArr.join('')
 }
 
-function writeDisplay(e) {
-    buttonPress = document.createElement('div')
-    buttonPress.classList.add('number-display')
-    buttonPress.textContent = e;    
-    displayArea.appendChild(buttonPress)
+function clearDisplay(displayArr) {
+    displayArr = []
+    displayArea = document.querySelector('.result')
+    displayArea.textContent = displayArr.join('')
 }
 
-function clearError() {
-
-    displayValues = document.querySelectorAll('.error-display')
-    displayValues.forEach(value => displayArea.removeChild(value))
-    errorFlag = 0
+function writeHistory (displayArr, historyArr) {
+    historyArr = displayArr
+    historyArea = document.querySelector('.history')
+    historyArea.textContent = historyArr.join('')
 }
 
-function writeError(message) {
-    buttonPress = document.createElement('div')
-    buttonPress.classList.add('error-display')
-    buttonPress.textContent = message
-    displayArea.appendChild(buttonPress)
-    errorFlag = 1
+function clearHistory(historyArr) {
+    historyArr = []
+    historyArea = document.querySelector('.history')
+    historyArea.textContent = historyArr.join('')
 }
 
-function getFirstNumber (e) {
+function captureNumber (displayArr) {
 
-    
-    numberButtons.forEach(button => button.addEventListener('click', (e) =>{
-
-        clearError()
-
-        if (displayArray.length === 0) clearDisplay();
-        solution = null
+    displayValue = Number.parseInt(displayArr.join(''))
+    return displayValue
+}
 
 
-        if(!operator) {
-            writeDisplay(e.srcElement.innerText)
-            displayArray.push(e.srcElement.innerText)
+let displayArr = []
+let historyArr = []
+let num1
+let operator
+let num2
+let solution
 
-        }
+calculatorButtons = document.querySelectorAll('button')
+calculatorButtons.forEach(button => button.addEventListener('click', (e) => {
 
-        if(operator) {
-            if (displayArray.length === 0) clearDisplay();
-            solution = null
-            writeDisplay(e.srcElement.innerText)
-            displayArray.push(e.srcElement.innerText) //Storing user entries in array that will be joined to integer once operator is selected in calculate function
-        }
+
+    if(e.srcElement.classList.contains('number-button')) {
         
-    }))
-}
+        if(solution) {
+            num1 = null
+            num2 = null
+            operator = null
+            solution = null
+            displayArr = []
+            historyArr = []
+            clearHistory()
+        }
 
-function calculate (e) {
-    calculationButtons.forEach(button => button.addEventListener ('click', (e) => {
+        writeDisplay(e.srcElement.textContent, displayArr)
+    }
 
+    if (e.srcElement.classList.contains('calculation-button')) {
 
-        if(!solution && !operator && errorFlag === 0) {
-            firstNum = parseInt(displayArray.join('')) // Converting firstNum initially stored as Array into integer
-            displayArray = []
-            if (!firstNum) {
-                clearDisplay()
-                firstNum = null
-                nextNum = null
+        if (displayArr.length > 0) {
+
+            if(solution) {
+                num1 = solution
+                num2 = null
                 operator = null
                 solution = null
-                displayArray = []
-                writeError("Error:\nFirst number not entered")
+                displayArr = [num1]
+                historyArr = []
             }
-        }
 
-        if(!operator && errorFlag === 0) {
             operator = e.srcElement.textContent
-            displayArray = []
-        }
-            
-        if(operator && displayArray.length > 0 && errorFlag === 0) {
-
-            nextNum = parseInt(displayArray.join(''))
-            solution = operate(firstNum, operator, nextNum)
-            clearDisplay();
-            setTimeout(() => writeDisplay(solution), 100)
-            firstNum = solution
-            operator = e.srcElement.textContent
-            nextNum = null
-            displayArray = []
+            writeDisplay (` ${e.srcElement.textContent} `, displayArr)
 
         }
 
+        else {
 
+            //Fill this in
+        }
+    }
+
+
+    if (e.srcElement.classList.contains('equals-button')) {
+        console.log(operator)
+        if(operator) {
+            operatorIndex = displayArr.findIndex((element) => element === ' + ' || element === ' - ' || element === ' x ' || element === ' / ')
+            if(!num1) {
+                num1 = captureNumber(displayArr.filter((element, index) => index < operatorIndex))
+            }
+            num2 = captureNumber(displayArr.filter((element, index) => index > operatorIndex))
+            solution = operate(num1, operator, num2)
+            writeHistory(displayArr, historyArr)
+            writeDisplay(`${solution}`, [])
+        }
+    }
     
-    
-    }))
-}
+    if (e.srcElement.classList.contains('clear-button')) {
 
-function equals (e) {
-
-    equalsButton.addEventListener('click', (e) => {
-
-
-        if(displayArray.length === 0 && !firstNum && operator && errorFlag === 0) {
-
-            solution = 0
-        }
-
-
-        if(displayArray.length === 0 && firstNum && !operator && errorFlag === 0) {
-
-            solution = firstNum
-        }
-
-        if(displayArray.length === 0 && firstNum && operator && errorFlag === 0) {
-
-            writeError("Error:\nSecond number not entered")
-        }
-        
-        if(!operator && displayArray.length > 0 && errorFlag === 0) {
-            firstNum = parseInt(displayArray.join(''))
-            solution = firstNum
-        }
-
-        if (operator && displayArray.length > 0 && errorFlag === 0) {
-            nextNum = parseInt(displayArray.join('')) // Converting nextNum initially stored as Array into integer
-            solution = operate(firstNum, operator, nextNum)
-        }
-        clearDisplay();
-        setTimeout(() => writeDisplay(solution), 100)
-        firstNum = solution
-        nextNum = null
-        operator = null
-        displayArray = []
-    
-    })
-}
-
-function clear (e) {
-
-    clearButton.addEventListener('click', (e) => {
-        clearError()
-        clearDisplay()
-        firstNum = null
-        nextNum = null
+        clearDisplay(displayArr)
+        clearHistory()
+        num1 = null
+        num2 = null
         operator = null
         solution = null
-        displayArray = []
+        displayArr = []
+        historyArr = []
+        
 
-    })
-}
+    }
 
-
-
-
-//TODO Exception Handling
-//Reset when pressing a number after solution is displayed - DONE
-//firstNum then equals should keep same value instead of appending - DONE
-//Clicking operator after solution is displayed should carry solution as firstNum and capture nextNum - DONE
-//Error message when dividing by zero
-//Round decimals to prevent overflow of UI
-//Keep first number on screen until second number input begins - DONE
-
-
-let displayArray = []
-let firstNum
-let nextNum
-let operator
-let solution
-let errorFlag = 0
-
-getFirstNumber()
-calculate();
-equals();
-clear();
-
-
-
+}))
 
